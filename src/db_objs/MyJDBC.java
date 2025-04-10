@@ -8,7 +8,7 @@ import java.sql.*;
  */
 public class MyJDBC {
     // db configurations
-    private static final String DB_URL = "jdbc::mysql//127.0.0.1:3306/bank_app";
+    private static final String DB_URL = "jdbc:mysql://127.0.0.1:3306/bank_app";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "4152050516";
 
@@ -20,7 +20,7 @@ public class MyJDBC {
 
             // create SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM user WHERE username = ? AND password = ?"
+                    "SELECT * FROM users WHERE username = ? AND password = ?"
             );
 
             // replace the ?s with values
