@@ -1,5 +1,7 @@
 package guis;
 
+import db_objs.User;
+
 import javax.swing.*;
 
 
@@ -9,6 +11,15 @@ import javax.swing.*;
     which will be unique to each subclass
  */
 public abstract class BaseFrame extends JFrame {
+
+    // store user information
+    protected User user;
+
+    public BaseFrame(String title, User user){
+        // initialize the user
+        this.user = user;
+        initialize(title);
+    }
 
     public BaseFrame(String title){
         initialize(title);
@@ -24,7 +35,6 @@ public abstract class BaseFrame extends JFrame {
 
         // terminate the program when the gui is closed
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 
         // set layout to null to have absolute layout which allows us to manually specify the size and position
         // of each gui component
