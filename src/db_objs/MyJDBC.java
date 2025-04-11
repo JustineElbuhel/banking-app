@@ -52,6 +52,58 @@ public class MyJDBC {
 
     }
 
+    // register new user to the db
+    // true - register success
+    // false - register failed
+    public static boolean register(String username, String password){
+        try{
+            // check if username is taken, if it is available add new user
+            if(!checkUser(username)){
+                Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+                PreparedStatement addNewUser = connection.prepareStatement(
+                        "INSERT INTO users " +
+                                "(username, password)" + "Values(?,?)"
+                );
+
+                addNewUser.setString(1, username);
+                addNewUser.setString(2, password);
+
+                addNewUser.executeUpdate();
+                return true;
+            }
+
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    // check if username already exists in the db
+    // true - user exists
+    // false - user does not exist in the db
+    private static boolean checkUser(String username){
+        try{
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+            PreparedStatement checkUserExists = connection.prepareStatement(
+                    "SELECT * FROM users WHERE username = ?"
+            );
+
+            checkUserExists.setString(1, username);
+            ResultSet resultSet = checkUserExists.executeQuery();
+
+            // this means the resultSet returned no data meaning the username is available
+            if(!resultSet.next()){
+                return false;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
 
